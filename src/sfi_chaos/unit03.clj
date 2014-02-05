@@ -10,10 +10,16 @@
   [b s]
   (map #(if (< % b) :L :R) s))
 
-(defn symbol-seq-freq
-  "Return a frequency count of given symbol seq"
+(defn symbol-pattern-freq
+  "Count occurences of a given symbol pattern p in the overall sequence s"
   [p s]
   (let [symbol-seqs (partition (count p) 1 s)]
     (count (filter #(= % p) symbol-seqs))))
 
-;; (doseq [first '(:L :R) second '(:L :R)] (println (symbol-seq-freq (list first second) ss) (list first second)))
+;; Generalise for arbitrary pattern length - use a macro?
+(defn print-sequence-summary
+  "Display counts for each symbol pattern"
+  [s]
+  (doseq [first '(:L :R) second '(:L :R)]
+    (println (symbol-pattern-freq (list first second) s)
+             (list first second))))
